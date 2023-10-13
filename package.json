@@ -1,0 +1,12 @@
+{
+  "name": "programacionweb-backend2",
+  "version": "1.0.0",
+  "description": "Este es un proyecto de ejemplo de una aplicación web MVC desarrollada en ASP.NET. El patrón Modelo-Vista-Controlador se utiliza para organizar y estructurar la aplicación de manera efectiva.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
