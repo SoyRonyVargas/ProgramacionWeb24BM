@@ -1,37 +1,72 @@
-﻿using Humanizer;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Mail;
+using Web_24BM.Models;
+using Web_24BM.Services;
 
 namespace Web_24BM.Controllers
 {
     public class ContactoController : Controller
     {
+        public IEmailSenderService emailSenderService;
+
+        public ContactoController(IEmailSenderService emailSenderService)
+        {
+            this.emailSenderService = emailSenderService;
+        }
+
         public IActionResult Index()
         {
             return View();
         }
+
+
         public IActionResult EnviarEmail(string email, string comentario)
         {
+            Debugger.Break();
             TempData["EmailT"] = email;
             TempData["ComentarioT"] = comentario;
-            EnviarEmailSmtp(email);
+            //EnviarEmailSmtp(email);
             return View("Index","contacto");
         }
 
-        public bool EnviarEmailSmtp(string email)
+        [HttpPost]
+        public IActionResult EnviarFormulario(EnviarFormulario model)
         {
-            MailMessage main = new MailMessage();
-            SmtpClient smtpClient = new SmtpClient("mail.shapp.mx", 587);
-            smtpClient.EnableSsl = true;
-            smtpClient.UseDefaultCredentials = false;
-            smtpClient.Credentials = new NetworkCredential("moises.puc@shapp.mx", "Dharserck_999");
-            main.From = new MailAddress("moises.puc@shapp.mx","administrador");
-            main.To.Add(email);
-            main.IsBodyHtml = true;
-            main.Body= $"se ha contactado la persona con el correo {email} para solicitar informacion";
-            smtpClient.Send(main);
-            return true; 
+            TempData["EmailT"] = model.email;
+            
+            TempData["ComentarioT"] = model.comentario;
+            
+            bool response = this.emailSenderService.SendEmail(model.email , model.asunto , model.comentario);
+
+            TempData["enviado"] = response;
+
+            return View("Index");
+
+        }
+
+        public bool EnviarEmailSmtp(string email , string asunto , string comentario)
+        {
+            try
+            {
+                MailMessage main = new MailMessage();
+                SmtpClient smtpClient = new SmtpClient("mail.shapp.mx", 587);
+                smtpClient.EnableSsl = true;
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = new NetworkCredential("moises.puc@shapp.mx", "Dhaserck_999");
+                main.From = new MailAddress("moises.puc@shapp.mx", "Administrador");
+                main.Subject = asunto;
+                main.To.Add(email);
+                main.IsBodyHtml = true;
+                main.Body = $"{comentario}";
+                smtpClient.Send(main);
+                return true; 
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
