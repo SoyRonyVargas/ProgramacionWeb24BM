@@ -1,0 +1,63 @@
+﻿
+<section>
+    <section id="carouselExample" class="carousel slide">
+        <div class="carousel-inner">
+            <article class="carousel-item active">
+                <img src="~/img/guardianas estelares.jpg" class="d-block w-100" alt="...">
+            </article>
+            <div class="carousel-item">
+                <img src="~/img/EDG.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="~/img/kda.webp" class="d-block w-100" alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </section>
+</section>
+<div class="container mt-5">
+    @if (TempData["EmailT"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            Se ha enviado un correo de @TempData["EmailT"]
+        </div>
+    }
+    <div class="row">
+        <div class="col-12">
+            <h3 class="text-center">Formulario de contacto</h3>
+            <p class="text-center">Escribenos un mensaje y te contactaremos.</p>
+        </div>
+        <div>
+            <div class="col-8">
+                <form asp-action="EnviarEmail" method="post">
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                <input type="email" name="Email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+                <textarea class="form-control" name="Comentario" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+                <input type="submit" class="btn btn-primary" value="enviar" />
+            </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .carousel-item{
+
+        height:450px;
+    }
+</style>
