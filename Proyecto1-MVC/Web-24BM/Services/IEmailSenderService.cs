@@ -1,8 +1,10 @@
-﻿namespace Web_24BM.Services
+﻿using Web_24BM.Models;
+
+namespace Web_24BM.Services
 {
     public interface IEmailSenderService
     {
         bool SendEmail(string email, string asunto, string comentario);
-        void Say(string email);
+        bool SendEmailFull(EnviarFormularioFull formulario);
     }
 }

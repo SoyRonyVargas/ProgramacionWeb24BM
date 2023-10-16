@@ -1,10 +1,10 @@
-﻿@model EnviarFormularioFull;
+@model EnviarFormularioFull;
 
 <section class="container mt-5">
     @if (TempData["enviado"] != null)
     {
         <div class="alert alert-success" role="alert">
-            Se ha enviado un correo de @TempData["enviado"]
+            Se ha enviado un correo a @TempData["enviado_email"]
         </div>
     }
     <div class="row">
@@ -13,8 +13,12 @@
             <p class="text-center">Escribenos un mensaje y te contactaremos.</p>
         </div>
         <div>
-            <div class="col-8">
-                <form asp-action="EnviarFullFormulario" method="post">
+            <div class="col mt-3">
+                <form class="w-50 mx-auto col" asp-action="EnviarFullFormulario" method="post">
+                    <article class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Asunto</label>
+                        <input type="text" asp-for="asunto" class="form-control" placeholder="test">
+                    </article>
                     <article class="mb-3">
                         <label for="nombre" class="form-label">Nombre:</label>
                         <input 
@@ -64,7 +68,14 @@
                         />
                     </article>
                     <article class="mb-3">
-                        <label for="nombre" class="form-label">Hora entrada:</label>
+                        <label for="nombre" class="form-label">Turno:</label>
+                        <select class="form-select" asp-for="turno">
+                            <option selected value="Matutino">Matutino</option>
+                            <option value="Vespertino">Vespertino</option>
+                        </select>
+                    </article>
+                    <article class="mb-3">
+                        <label for="nombre" class="form-label">Comentarios:</label>
                         <textarea 
                             name="comentario"
                             asp-for="comentario" 
@@ -73,11 +84,7 @@
                         ></textarea>
                     </article>
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Asunto</label>
-                        <input type="text" asp-for="asunto" class="form-control" placeholder="test">
-                    </div>
-                    <div class="mb-3">
-                        <input type="submit" class="btn btn-primary" value="enviar" />
+                        <input type="submit" class="btn btn-primary" value="Enviar" />
                     </div>
                 </form>
             </div>
